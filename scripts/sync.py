@@ -129,25 +129,55 @@ async def discover(client, group, topic_id):
 def source_from_state(state, selected_keys=None):
     if selected_keys is None:
         selected_keys = ('YTLite', 'YTKACE', 'YouMod')
+
+    source_names = {
+        'YTLite': 'Driftywinds YTLite',
+        'YTKACE': 'Driftywinds YTKACE',
+        'YouMod': 'Driftywinds YouMod',
+    }
+
+    source_name = (
+        source_names[selected_keys[0]]
+        if len(selected_keys) == 1
+        else 'Driftywinds Tweaked YouTube'
+    )
+
     seen_bundle_ids = set()
     apps = []
+
     for key in selected_keys:
         versions = state['apps'].get(key, [])
         if not versions:
             continue
+
         # Maintain newest-first order; stale apps remain on their own latest version.
         latest = versions[0]
+
         # A single AltSource may not expose duplicate bundle identifiers.
         if latest['bundleIdentifier'] in seen_bundle_ids:
             print(f'Skipping {key} in this source: shared bundle ID {latest["bundleIdentifier"]}')
             continue
+
         seen_bundle_ids.add(latest['bundleIdentifier'])
+
         if any(v['bundleIdentifier'] != latest['bundleIdentifier'] for v in versions):
             raise ValueError(f'{key} changed bundle IDs; migration requires manual review')
+
         rendered = []
         for v in versions:
-            entry = {field: v[field] for field in ('version', 'buildVersion', 'date', 'downloadURL', 'size', 'localizedDescription')}
+            entry = {
+                field: v[field]
+                for field in (
+                    'version',
+                    'buildVersion',
+                    'date',
+                    'downloadURL',
+                    'size',
+                    'localizedDescription'
+                )
+            }
             rendered.append(entry)
+
         apps.append({
             'name': APPS[key]['name'],
             'bundleIdentifier': latest['bundleIdentifier'],
@@ -157,9 +187,12 @@ def source_from_state(state, selected_keys=None):
             'iconURL': f'https://raw.githubusercontent.com/{REPO}/main/assets/{APPS[key]["icon"]}',
             'versions': rendered,
         })
+
     return {
-        'name': 'Driftywinds Tweaked YouTube',
-        'identifier': 'com.community.driftywinds.youtube' + ('.' + selected_keys[0].lower() if len(selected_keys) == 1 else ''),
+        'name': source_name,
+        'identifier': 'com.community.driftywinds.youtube' + (
+            '.' + selected_keys[0].lower() if len(selected_keys) == 1 else ''
+        ),
         'subtitle': 'Automated mirror of selected Telegram topic releases',
         'iconURL': f'https://raw.githubusercontent.com/{REPO}/main/assets/source.png',
         'apps': apps,
