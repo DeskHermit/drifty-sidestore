@@ -1,6 +1,27 @@
 {
   "name": "Driftywinds Tweaked YouTube",
   "identifier": "com.community.driftywinds.youtube.ytkace",
-  "apps": [],
+  "subtitle": "Automated mirror of selected Telegram topic releases",
+  "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/source.png",
+  "apps": [
+    {
+      "name": "YTKACE",
+      "bundleIdentifier": "com.google.ios.youtube",
+      "developerName": "Driftywinds (community repack)",
+      "subtitle": "Tweaked YouTube client",
+      "localizedDescription": "YTKACE with additional YouTube tweaks. Unofficial, third-party release.",
+      "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytkace.png",
+      "versions": [
+        {
+          "version": "21.44.4",
+          "buildVersion": "21.44.4",
+          "date": "2026-11-03",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-tg-23803/YTKACE_1.1.4_YouTube_21.44.4.ipa",
+          "size": 138291737,
+          "localizedDescription": "YouTube 21.44.4; YTKACE 1.1.4. Original Telegram attachment: YTKACE_1.1.4_YouTube_21.44.4.ipa"
+        }
+      ]
+    }
+  ],
   "news": []
 }

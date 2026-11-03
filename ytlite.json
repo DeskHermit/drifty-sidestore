@@ -1,6 +1,27 @@
 {
   "name": "Driftywinds Tweaked YouTube",
   "identifier": "com.community.driftywinds.youtube.ytlite",
-  "apps": [],
+  "subtitle": "Automated mirror of selected Telegram topic releases",
+  "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/source.png",
+  "apps": [
+    {
+      "name": "YTLite",
+      "bundleIdentifier": "com.google.ios.youtube",
+      "developerName": "Driftywinds (community repack)",
+      "subtitle": "Tweaked YouTube client",
+      "localizedDescription": "YTLite with additional YouTube tweaks. Unofficial, third-party release.",
+      "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytlite.png",
+      "versions": [
+        {
+          "version": "21.43.5",
+          "buildVersion": "21.43.5",
+          "date": "2026-10-29",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-tg-23667/YTPlusYTweaks_custom_SDK16.5_v21.43.5.ipa",
+          "size": 150653878,
+          "localizedDescription": "YouTube 21.43.5; YTLite. Original Telegram attachment: YTPlusYTweaks_custom_SDK16.5_v21.43.5.ipa"
+        }
+      ]
+    }
+  ],
   "news": []
 }

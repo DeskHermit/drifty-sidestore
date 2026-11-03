@@ -1,6 +1,27 @@
 {
   "name": "Driftywinds Tweaked YouTube",
   "identifier": "com.community.driftywinds.youtube.youmod",
-  "apps": [],
+  "subtitle": "Automated mirror of selected Telegram topic releases",
+  "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/source.png",
+  "apps": [
+    {
+      "name": "YouMod",
+      "bundleIdentifier": "com.google.ios.youtube",
+      "developerName": "Driftywinds (community repack)",
+      "subtitle": "Tweaked YouTube client",
+      "localizedDescription": "YouMod with additional YouTube tweaks. Unofficial, third-party release.",
+      "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/youmod.png",
+      "versions": [
+        {
+          "version": "21.44.4",
+          "buildVersion": "21.44.4",
+          "date": "2026-11-03",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-tg-23804/YouMod_21.44.4_v2.0.0.ipa",
+          "size": 133376141,
+          "localizedDescription": "YouTube 21.44.4; YouMod 2.0.0. Original Telegram attachment: YouMod_21.44.4_v2.0.0.ipa"
+        }
+      ]
+    }
+  ],
   "news": []
 }
