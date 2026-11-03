@@ -200,7 +200,7 @@ def source_from_state(state, selected_keys=None):
             '.' + selected_keys[0].lower() if len(selected_keys) == 1 else ''
         ),
         'subtitle': 'Automated mirror of selected Telegram topic releases',
-        'iconURL': f'https://raw.githubusercontent.com/{REPO}/main/assets/source.png',
+        'iconURL': f'https://raw.githubusercontent.com/{REPO}/main/assets/{source_icon}',
         'apps': apps,
         'news': [],
     }
