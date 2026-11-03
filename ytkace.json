@@ -2,7 +2,7 @@
   "name": "Driftywinds YTKACE",
   "identifier": "com.community.driftywinds.youtube.ytkace",
   "subtitle": "Automated mirror of selected Telegram topic releases",
-  "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/source.png",
+  "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytkace.png",
   "apps": [
     {
       "name": "YTKACE",
