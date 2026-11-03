@@ -142,6 +142,12 @@ def source_from_state(state, selected_keys=None):
         else 'Driftywinds Tweaked YouTube'
     )
 
+    source_icon = (
+        APPS[selected_keys[0]]['icon']
+        if len(selected_keys) == 1
+        else 'source.png'
+    )
+
     seen_bundle_ids = set()
     apps = []
 
