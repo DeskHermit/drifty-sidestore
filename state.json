@@ -15,6 +15,17 @@
     ],
     "YTKACE": [
       {
+        "telegramMessageId": 23827,
+        "telegramFileName": "YTKACE_1.1.5_YouTube_21.44.4.ipa",
+        "bundleIdentifier": "com.google.ios.youtube",
+        "version": "21.44.4",
+        "buildVersion": "21.44.4",
+        "date": "2026-11-04",
+        "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-tg-23827/YTKACE_1.1.5_YouTube_21.44.4.ipa",
+        "size": 138302981,
+        "localizedDescription": "YouTube 21.44.4; YTKACE 1.1.5. Original Telegram attachment: YTKACE_1.1.5_YouTube_21.44.4.ipa"
+      },
+      {
         "telegramMessageId": 23803,
         "telegramFileName": "YTKACE_1.1.4_YouTube_21.44.4.ipa",
         "bundleIdentifier": "com.google.ios.youtube",
@@ -27,6 +38,17 @@
       }
     ],
     "YTLite": [
+      {
+        "telegramMessageId": 23828,
+        "telegramFileName": "YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa",
+        "bundleIdentifier": "com.google.ios.youtube",
+        "version": "21.44.4",
+        "buildVersion": "21.44.4",
+        "date": "2026-11-04",
+        "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-tg-23828/YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa",
+        "size": 151984742,
+        "localizedDescription": "YouTube 21.44.4; YTLite. Original Telegram attachment: YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa"
+      },
       {
         "telegramMessageId": 23667,
         "telegramFileName": "YTPlusYTweaks_custom_SDK16.5_v21.43.5.ipa",
