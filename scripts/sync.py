@@ -30,6 +30,8 @@ REPO = os.environ['GH_REPO']
 GROUP_NAME = os.getenv('TG_GROUP_NAME', "drifty's megalomania")
 TOPIC_NAME = os.getenv('TG_TOPIC_NAME', '[IPA] Tweaked YouTube')
 MAX_MESSAGES = int(os.getenv('MAX_MESSAGES', '1200'))
+# Additional topic documents to scan for a matching YTKACE + Tweaks build.
+YTKACE_TWEAKS_LOOKBACK = int(os.getenv('YTKACE_TWEAKS_LOOKBACK', '200'))
 
 APPS = {
     'YTLite': {'name': 'YTLite', 'description': 'YTLite with additional YouTube tweaks.', 'icon': 'ytlite.png'},
@@ -38,7 +40,7 @@ APPS = {
 }
 PATTERNS = {
     'YTLite': re.compile(r'^YTPlusYTweaks_custom_.*_v(?P<yt>\d+\.\d+\.\d+)\.ipa$', re.I),
-    'YTKACE': re.compile(r'^YTKACE_(?P<mod>[\w.]+)_YouTube_(?P<yt>\d+\.\d+\.\d+)\.ipa$', re.I),
+    'YTKACE': re.compile(r'^YTKACE_(?P<mod>[\w.]+)_YouTube_(?P<yt>\d+\.\d+\.\d+)(?P<tweaks>_tweaks)?\.ipa$', re.I),
     'YouMod': re.compile(r'^YouMod_(?P<yt>\d+\.\d+\.\d+)_v(?P<mod>[\w.]+)\.ipa$', re.I),
 }
 
@@ -62,6 +64,46 @@ def classify(name):
         if match:
             return key, match.groupdict()
     return None, None
+
+
+def release_label(key, match):
+    """Human-readable title extracted from the attachment filename."""
+    youtube = match['yt']
+    if key == 'YTKACE':
+        suffix = ' + Tweaks' if match.get('tweaks') else ' (standard)'
+        return f'YTKACE v{match["mod"]}{suffix} | YouTube v{youtube}'
+    if key == 'YouMod':
+        return f'YouMod v{match["mod"]} + Tweaks | YouTube v{youtube}'
+    return f'YTLite + Tweaks | YouTube v{youtube}'
+
+
+def state_release_label(key, item):
+    """Support existing state entries without requiring old IPAs to be redownloaded."""
+    if item.get('releaseLabel'):
+        return item['releaseLabel']
+    filename = item.get('telegramFileName', '')
+    classified_key, match = classify(filename)
+    if classified_key == key and match:
+        return release_label(key, match)
+    return f'{key} | YouTube v{item["version"]}'
+
+
+def telegram_caption(message, filename):
+    """Use an attachment's accompanying caption, without duplicating its filename."""
+    text = ' '.join((getattr(message, 'message', None) or '').split())
+    text = text.replace(filename, '').strip(' \n\t-:📎')
+    return text[:500]
+
+
+def sidestore_build_index(build):
+    """Recover the monotonically increasing sequence from our X.Y.0 build scheme."""
+    match = re.fullmatch(r'(\d+)\.(\d{1,2})\.0', str(build))
+    if not match:
+        return None
+    major, minor = map(int, match.groups())
+    if minor >= 100:
+        return None
+    return major * 100 + minor
 
 
 def ipa_info(path):
@@ -140,15 +182,24 @@ async def get_topic(client, group):
 
 
 async def discover(client, group, topic_id):
-    """Search just this forum topic, newest first, for IPA documents."""
+    """Find the newest of each variant, preferring + Tweaks for the same YTKACE version.
+
+    Never replace a newer YTKACE/YouTube pair with an older + Tweaks pair.
+    If the newest YTKACE is standard, scan some extra documents for its
+    exact + Tweaks counterpart (even if the standard file was posted later).
+    """
     found = {}
     offset = 0
     scanned = 0
-    while scanned < MAX_MESSAGES and len(found) < len(APPS):
-        result = await client(SearchRequest(peer=group, q='', filter=InputMessagesFilterDocument(),
+    ytkace_plain_found_at = None
+
+    while scanned < MAX_MESSAGES:
+        result = await client(SearchRequest(
+            peer=group, q='', filter=InputMessagesFilterDocument(),
             min_date=None, max_date=None, offset_id=offset, add_offset=0,
             limit=min(100, MAX_MESSAGES - scanned), max_id=0, min_id=0,
-            hash=0, top_msg_id=topic_id, from_id=None))
+            hash=0, top_msg_id=topic_id, from_id=None
+        ))
         messages = result.messages
         if not messages:
             break
@@ -158,17 +209,43 @@ async def discover(client, group, topic_id):
             if not document:
                 continue
             for attr in document.attributes:
-                name = getattr(attr, 'file_name', None)
-                if not name:
+                filename = getattr(attr, 'file_name', None)
+                if not filename:
                     continue
-                key, match = classify(name)
-                if key and key not in found:
-                    found[key] = (msg, name, match)
-                    print(f'Found {key}: {name}, Telegram message {msg.id}')
+                key, match = classify(filename)
+                if not key:
+                    continue
+                if key not in found:
+                    found[key] = (msg, filename, match)
+                    print(f'Found {key}: {filename}, Telegram message {msg.id}')
+                    if key == 'YTKACE' and not match.get('tweaks'):
+                        ytkace_plain_found_at = scanned
+                elif key == 'YTKACE' and match.get('tweaks'):
+                    _, previous_filename, previous_match = found['YTKACE']
+                    if (not previous_match.get('tweaks')
+                            and previous_match['mod'] == match['mod']
+                            and previous_match['yt'] == match['yt']):
+                        found['YTKACE'] = (msg, filename, match)
+                        print(f'YTKACE: preferring Tweaks build {filename} '
+                              f'over {previous_filename}')
+
         new_offset = min(msg.id for msg in messages)
         if new_offset >= offset and offset:
             break
         offset = new_offset
+
+        # Continue looking for + Tweaks only while the selected YTKACE is
+        # standard. Once found, stop as soon as all variants are present.
+        if len(found) == len(APPS):
+            chosen = found['YTKACE'][2]
+            if chosen.get('tweaks'):
+                break
+            if (ytkace_plain_found_at is not None
+                    and scanned - ytkace_plain_found_at >= YTKACE_TWEAKS_LOOKBACK):
+                print('YTKACE: no matching + Tweaks attachment in lookback; '
+                      'using standard build')
+                break
+
     print(f'Scanned {scanned} topic documents; found: {list(found)}')
     return found
 
@@ -229,14 +306,28 @@ def source_from_state(state, selected_keys=None):
                     'localizedDescription'
                 )
             }
+            label = state_release_label(key, v)
+            if not entry['localizedDescription'].startswith(label):
+                entry['localizedDescription'] = (
+                    label + '\n\n' + entry['localizedDescription']
+                )
             rendered.append(entry)
 
+        latest_label = state_release_label(key, latest)
+        latest_description = f'Latest release: {latest_label}'
+        caption = latest.get('telegramCaption')
+        if caption and caption.casefold() != latest_label.casefold():
+            latest_description += f'\nTelegram description: {caption}'
+        latest_description += (
+            '\n\n' + APPS[key]['description']
+            + '\nUnofficial, third-party release.'
+        )
         apps.append({
             'name': APPS[key]['name'],
             'bundleIdentifier': latest['bundleIdentifier'],
             'developerName': 'Driftywinds (community repack)',
-            'subtitle': 'Tweaked YouTube client',
-            'localizedDescription': APPS[key]['description'] + ' Unofficial, third-party release.',
+            'subtitle': latest_label,
+            'localizedDescription': latest_description,
             'iconURL': f'https://raw.githubusercontent.com/{REPO}/main/assets/{APPS[key]["icon"]}',
             'versions': rendered,
         })
@@ -246,7 +337,11 @@ def source_from_state(state, selected_keys=None):
         'identifier': 'com.community.driftywinds.youtube' + (
             '.' + selected_keys[0].lower() if len(selected_keys) == 1 else ''
         ),
-        'subtitle': 'Automated mirror of selected Telegram topic releases',
+        'subtitle': (
+            f'Latest: {state_release_label(selected_keys[0], state["apps"][selected_keys[0]][0])}'
+            if len(selected_keys) == 1 and state['apps'].get(selected_keys[0])
+            else 'Automated mirror of selected Telegram topic releases'
+        ),
         'iconURL': f'https://raw.githubusercontent.com/{REPO}/main/assets/{source_icon}',
         'apps': apps,
         'news': [],
@@ -266,15 +361,23 @@ async def main():
         with tempfile.TemporaryDirectory() as tmp:
             for key, (msg, filename, match) in found.items():
                 prior = state['apps'].get(key, [])
-                # The source uses a unique, increasing internal build for EACH
-                # variant. Also migrate the currently mirrored YTLite/YouMod
-                # attachments (and older YTKACE ones) exactly once.
-                desired_build = sidestore_release_build(msg.id)
+                # All variants get a unique build. If a same-version + Tweaks
+                # attachment was posted before a standard attachment we already
+                # mirrored, use a newer sequence to avoid a downgrade.
+                base_build = sidestore_release_build(msg.id)
                 if prior and prior[0].get('telegramMessageId') == msg.id:
-                    if prior[0].get('buildVersion') == desired_build:
+                    if (prior[0].get('buildVersion') == base_build
+                            or prior[0].get('buildStrategy') == 'sequence-v2'):
                         print(f'{key}: unchanged')
                         continue
-                    print(f'{key}: upgrading previously mirrored release to unique build metadata')
+                    print(f'{key}: migrating release to unique build metadata')
+
+                build_index = msg.id
+                if prior and prior[0].get('telegramMessageId') != msg.id:
+                    previous_index = sidestore_build_index(prior[0].get('buildVersion'))
+                    if previous_index is not None:
+                        build_index = max(build_index, previous_index + 1)
+                desired_build = sidestore_release_build(build_index)
 
                 local = Path(tmp) / filename
                 print(f'{key}: downloading {filename}')
@@ -311,13 +414,14 @@ async def main():
                 # Existing YTKACE -ss- tags remain the same.
                 tag = f'{key.lower()}-ss-tg-{msg.id}'
                 url = f'https://github.com/{REPO}/releases/download/{quote(tag)}/{quote(filename)}'
-                description = f'YouTube {match["yt"]}; {key}'
-                if match.get('mod'):
-                    description += f' {match["mod"]}'
+                label = release_label(key, match)
+                caption = telegram_caption(msg, filename)
+                description = label
+                if caption and caption.casefold() != label.casefold():
+                    description += f'\n\nTelegram description: {caption}'
                 description += (
-                    f'. Mirror of Telegram attachment {filename}; '
-                    f'internal build metadata {original_build} -> {build} '
-                    'for SideStore update detection'
+                    f'\n\nOriginal attachment: {filename}'
+                    f'\nSideStore build: {build} (upstream build: {original_build})'
                 )
                 # Do not publish state/source until release upload succeeds.
                 existing = subprocess.run(
@@ -336,6 +440,8 @@ async def main():
                     'bundleIdentifier': bundle, 'version': version,
                     'buildVersion': build, 'date': date, 'downloadURL': url,
                     'size': size, 'localizedDescription': description,
+                    'releaseLabel': label, 'telegramCaption': caption,
+                    'buildStrategy': 'sequence-v2',
                 }
                 state['apps'][key] = [item] + [v for v in prior if v['telegramMessageId'] != msg.id]
     STATE.write_text(json.dumps(state, indent=2, ensure_ascii=False) + '\n')
