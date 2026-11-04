@@ -1,24 +1,32 @@
 {
   "name": "Driftywinds YTKACE",
   "identifier": "com.community.driftywinds.youtube.ytkace",
-  "subtitle": "Automated mirror of selected Telegram topic releases",
+  "subtitle": "Latest: YTKACE v1.1.5 + Tweaks | YouTube v21.44.4",
   "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytkace.png",
   "apps": [
     {
       "name": "YTKACE",
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "Driftywinds (community repack)",
-      "subtitle": "Tweaked YouTube client",
-      "localizedDescription": "YTKACE with additional YouTube tweaks. Unofficial, third-party release.",
+      "subtitle": "YTKACE v1.1.5 + Tweaks | YouTube v21.44.4",
+      "localizedDescription": "Latest release: YTKACE v1.1.5 + Tweaks | YouTube v21.44.4\nTelegram description: YTKACE (v1.1.5) + Tweaks v21.44.4\n\nYTKACE with additional YouTube tweaks.\nUnofficial, third-party release.",
       "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytkace.png",
       "versions": [
+        {
+          "version": "21.44.4",
+          "buildVersion": "238.52.0",
+          "date": "2026-11-04",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23852/YTKACE_1.1.5_YouTube_21.44.4_tweaks.ipa",
+          "size": 134920008,
+          "localizedDescription": "YTKACE v1.1.5 + Tweaks | YouTube v21.44.4\n\nTelegram description: YTKACE (v1.1.5) + Tweaks v21.44.4\n\nOriginal attachment: YTKACE_1.1.5_YouTube_21.44.4_tweaks.ipa\nSideStore build: 238.52.0 (upstream build: 21.44.4)"
+        },
         {
           "version": "21.44.4",
           "buildVersion": "238.27.0",
           "date": "2026-11-04",
           "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23827/YTKACE_1.1.5_YouTube_21.44.4.ipa",
           "size": 138404226,
-          "localizedDescription": "YouTube 21.44.4; YTKACE 1.1.5. Mirror of Telegram attachment YTKACE_1.1.5_YouTube_21.44.4.ipa; internal build metadata 21.44.4 -> 238.27.0 for SideStore update detection"
+          "localizedDescription": "YTKACE v1.1.5 (standard) | YouTube v21.44.4\n\nYouTube 21.44.4; YTKACE 1.1.5. Mirror of Telegram attachment YTKACE_1.1.5_YouTube_21.44.4.ipa; internal build metadata 21.44.4 -> 238.27.0 for SideStore update detection"
         },
         {
           "version": "21.44.4",
@@ -26,7 +34,7 @@
           "date": "2026-11-03",
           "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-tg-23803/YTKACE_1.1.4_YouTube_21.44.4.ipa",
           "size": 138291737,
-          "localizedDescription": "YouTube 21.44.4; YTKACE 1.1.4. Original Telegram attachment: YTKACE_1.1.4_YouTube_21.44.4.ipa"
+          "localizedDescription": "YTKACE v1.1.4 (standard) | YouTube v21.44.4\n\nYouTube 21.44.4; YTKACE 1.1.4. Original Telegram attachment: YTKACE_1.1.4_YouTube_21.44.4.ipa"
         }
       ]
     }

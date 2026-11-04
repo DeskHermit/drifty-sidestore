@@ -1,15 +1,15 @@
 {
   "name": "Driftywinds YTLite",
   "identifier": "com.community.driftywinds.youtube.ytlite",
-  "subtitle": "Automated mirror of selected Telegram topic releases",
+  "subtitle": "Latest: YTLite + Tweaks | YouTube v21.44.4",
   "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytlite.png",
   "apps": [
     {
       "name": "YTLite",
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "Driftywinds (community repack)",
-      "subtitle": "Tweaked YouTube client",
-      "localizedDescription": "YTLite with additional YouTube tweaks. Unofficial, third-party release.",
+      "subtitle": "YTLite + Tweaks | YouTube v21.44.4",
+      "localizedDescription": "Latest release: YTLite + Tweaks | YouTube v21.44.4\n\nYTLite with additional YouTube tweaks.\nUnofficial, third-party release.",
       "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytlite.png",
       "versions": [
         {
@@ -18,7 +18,7 @@
           "date": "2026-11-04",
           "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-23828/YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa",
           "size": 152049977,
-          "localizedDescription": "YouTube 21.44.4; YTLite. Mirror of Telegram attachment YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa; internal build metadata 21.44.4 -> 238.28.0 for SideStore update detection"
+          "localizedDescription": "YTLite + Tweaks | YouTube v21.44.4\n\nYouTube 21.44.4; YTLite. Mirror of Telegram attachment YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa; internal build metadata 21.44.4 -> 238.28.0 for SideStore update detection"
         },
         {
           "version": "21.43.5",
@@ -26,7 +26,7 @@
           "date": "2026-10-29",
           "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-tg-23667/YTPlusYTweaks_custom_SDK16.5_v21.43.5.ipa",
           "size": 150653878,
-          "localizedDescription": "YouTube 21.43.5; YTLite. Original Telegram attachment: YTPlusYTweaks_custom_SDK16.5_v21.43.5.ipa"
+          "localizedDescription": "YTLite + Tweaks | YouTube v21.43.5\n\nYouTube 21.43.5; YTLite. Original Telegram attachment: YTPlusYTweaks_custom_SDK16.5_v21.43.5.ipa"
         }
       ]
     }

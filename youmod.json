@@ -1,15 +1,15 @@
 {
   "name": "Driftywinds YouMod",
   "identifier": "com.community.driftywinds.youtube.youmod",
-  "subtitle": "Automated mirror of selected Telegram topic releases",
+  "subtitle": "Latest: YouMod v2.0.0 + Tweaks | YouTube v21.44.4",
   "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/youmod.png",
   "apps": [
     {
       "name": "YouMod",
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "Driftywinds (community repack)",
-      "subtitle": "Tweaked YouTube client",
-      "localizedDescription": "YouMod with additional YouTube tweaks. Unofficial, third-party release.",
+      "subtitle": "YouMod v2.0.0 + Tweaks | YouTube v21.44.4",
+      "localizedDescription": "Latest release: YouMod v2.0.0 + Tweaks | YouTube v21.44.4\n\nYouMod with additional YouTube tweaks.\nUnofficial, third-party release.",
       "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/youmod.png",
       "versions": [
         {
@@ -18,7 +18,7 @@
           "date": "2026-11-03",
           "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-23804/YouMod_21.44.4_v2.0.0.ipa",
           "size": 133469432,
-          "localizedDescription": "YouTube 21.44.4; YouMod 2.0.0. Mirror of Telegram attachment YouMod_21.44.4_v2.0.0.ipa; internal build metadata 21.44.4 -> 238.4.0 for SideStore update detection"
+          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.44.4\n\nYouTube 21.44.4; YouMod 2.0.0. Mirror of Telegram attachment YouMod_21.44.4_v2.0.0.ipa; internal build metadata 21.44.4 -> 238.4.0 for SideStore update detection"
         }
       ]
     }
