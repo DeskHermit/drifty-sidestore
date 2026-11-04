@@ -237,7 +237,11 @@ async def main():
                 # Updates require changes to the version/build pair. If upstream reused both,
                 # don't silently replace a previously installed release with ambiguous metadata.
                 if prior and (prior[0]['version'], prior[0]['buildVersion']) == (version, build):
-                    raise ValueError(f'{key}: upstream IPA {filename} changed, but Info.plist version/build are still {version}/{build}; manually fix the source/update policy')
+                    print(
+                        f'WARNING: {key} {filename} has the same internal '
+                        f'version/build ({version}/{build}) as the previous release. '
+                        'Publishing it, but SideStore may not detect an automatic update.'
+                    )
                 tag = f'{key.lower()}-tg-{msg.id}'
                 url = f'https://github.com/{REPO}/releases/download/{quote(tag)}/{quote(filename)}'
                 description = f'YouTube {match["yt"]}; {key}'
