@@ -14,11 +14,11 @@
       "versions": [
         {
           "version": "21.44.4",
-          "buildVersion": "21.44.4",
+          "buildVersion": "238.4.0",
           "date": "2026-11-03",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-tg-23804/YouMod_21.44.4_v2.0.0.ipa",
-          "size": 133376141,
-          "localizedDescription": "YouTube 21.44.4; YouMod 2.0.0. Original Telegram attachment: YouMod_21.44.4_v2.0.0.ipa"
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-23804/YouMod_21.44.4_v2.0.0.ipa",
+          "size": 133469432,
+          "localizedDescription": "YouTube 21.44.4; YouMod 2.0.0. Mirror of Telegram attachment YouMod_21.44.4_v2.0.0.ipa; internal build metadata 21.44.4 -> 238.4.0 for SideStore update detection"
         }
       ]
     }

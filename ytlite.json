@@ -14,11 +14,11 @@
       "versions": [
         {
           "version": "21.44.4",
-          "buildVersion": "21.44.4",
+          "buildVersion": "238.28.0",
           "date": "2026-11-04",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-tg-23828/YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa",
-          "size": 151984742,
-          "localizedDescription": "YouTube 21.44.4; YTLite. Original Telegram attachment: YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa"
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-23828/YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa",
+          "size": 152049977,
+          "localizedDescription": "YouTube 21.44.4; YTLite. Mirror of Telegram attachment YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa; internal build metadata 21.44.4 -> 238.28.0 for SideStore update detection"
         },
         {
           "version": "21.43.5",

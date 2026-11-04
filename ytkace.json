@@ -14,11 +14,11 @@
       "versions": [
         {
           "version": "21.44.4",
-          "buildVersion": "21.44.4",
+          "buildVersion": "238.27.0",
           "date": "2026-11-04",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-tg-23827/YTKACE_1.1.5_YouTube_21.44.4.ipa",
-          "size": 138302981,
-          "localizedDescription": "YouTube 21.44.4; YTKACE 1.1.5. Original Telegram attachment: YTKACE_1.1.5_YouTube_21.44.4.ipa"
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23827/YTKACE_1.1.5_YouTube_21.44.4.ipa",
+          "size": 138404226,
+          "localizedDescription": "YouTube 21.44.4; YTKACE 1.1.5. Mirror of Telegram attachment YTKACE_1.1.5_YouTube_21.44.4.ipa; internal build metadata 21.44.4 -> 238.27.0 for SideStore update detection"
         },
         {
           "version": "21.44.4",
