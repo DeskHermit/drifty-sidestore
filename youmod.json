@@ -1,17 +1,25 @@
 {
   "name": "Driftywinds YouMod",
   "identifier": "com.community.driftywinds.youtube.youmod",
-  "subtitle": "Latest: YouMod v2.0.0 + Tweaks | YouTube v21.44.4",
+  "subtitle": "Latest: YouMod v2.0.0 + Tweaks | YouTube v21.45.4",
   "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/youmod.png",
   "apps": [
     {
       "name": "YouMod",
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "Driftywinds (community repack)",
-      "subtitle": "YouMod v2.0.0 + Tweaks | YouTube v21.44.4",
-      "localizedDescription": "Latest release: YouMod v2.0.0 + Tweaks | YouTube v21.44.4\n\nYouMod with additional YouTube tweaks.\nUnofficial, third-party release.",
+      "subtitle": "YouMod v2.0.0 + Tweaks | YouTube v21.45.4",
+      "localizedDescription": "Latest release: YouMod v2.0.0 + Tweaks | YouTube v21.45.4\nTelegram description: YouMod (v2.0.0) + Tweaks v21.45.4\n\nYouMod with additional YouTube tweaks.\nUnofficial, third-party release.",
       "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/youmod.png",
       "versions": [
+        {
+          "version": "21.45.4",
+          "buildVersion": "239.72.0",
+          "date": "2026-11-09",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-23972/YouMod_21.45.4_v2.0.0.ipa",
+          "size": 134290109,
+          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.45.4\n\nTelegram description: YouMod (v2.0.0) + Tweaks v21.45.4\n\nOriginal attachment: YouMod_21.45.4_v2.0.0.ipa\nSideStore build: 239.72.0 (upstream build: 21.45.4)"
+        },
         {
           "version": "21.44.4",
           "buildVersion": "238.4.0",
