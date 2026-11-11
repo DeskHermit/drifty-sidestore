@@ -1,17 +1,25 @@
 {
   "name": "Driftywinds YTKACE",
   "identifier": "com.community.driftywinds.youtube.ytkace",
-  "subtitle": "Latest: YTKACE v1.1.5 + Tweaks | YouTube v21.45.4",
+  "subtitle": "Latest: YTKACE v1.1.7 + Tweaks | YouTube v21.45.4",
   "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytkace.png",
   "apps": [
     {
       "name": "YTKACE",
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "Driftywinds (community repack)",
-      "subtitle": "YTKACE v1.1.5 + Tweaks | YouTube v21.45.4",
-      "localizedDescription": "Latest release: YTKACE v1.1.5 + Tweaks | YouTube v21.45.4\nTelegram description: YTKACE (v1.1.5) v21.45.4\n\nYTKACE with additional YouTube tweaks.\nUnofficial, third-party release.",
+      "subtitle": "YTKACE v1.1.7 + Tweaks | YouTube v21.45.4",
+      "localizedDescription": "Latest release: YTKACE v1.1.7 + Tweaks | YouTube v21.45.4\nTelegram description: YTKACE (v1.1.7) v21.45.4\n\nYTKACE with additional YouTube tweaks.\nUnofficial, third-party release.",
       "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytkace.png",
       "versions": [
+        {
+          "version": "21.45.4",
+          "buildVersion": "239.88.0",
+          "date": "2026-11-11",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23988/YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa",
+          "size": 135560528,
+          "localizedDescription": "YTKACE v1.1.7 + Tweaks | YouTube v21.45.4\n\nTelegram description: YTKACE (v1.1.7) v21.45.4\n\nOriginal attachment: YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa\nSideStore build: 239.88.0 (upstream build: 21.45.4)"
+        },
         {
           "version": "21.45.4",
           "buildVersion": "239.71.0",

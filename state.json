@@ -29,6 +29,20 @@
     ],
     "YTKACE": [
       {
+        "telegramMessageId": 23988,
+        "telegramFileName": "YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa",
+        "bundleIdentifier": "com.google.ios.youtube",
+        "version": "21.45.4",
+        "buildVersion": "239.88.0",
+        "date": "2026-11-11",
+        "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23988/YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa",
+        "size": 135560528,
+        "localizedDescription": "YTKACE v1.1.7 + Tweaks | YouTube v21.45.4\n\nTelegram description: YTKACE (v1.1.7) v21.45.4\n\nOriginal attachment: YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa\nSideStore build: 239.88.0 (upstream build: 21.45.4)",
+        "releaseLabel": "YTKACE v1.1.7 + Tweaks | YouTube v21.45.4",
+        "telegramCaption": "YTKACE (v1.1.7) v21.45.4",
+        "buildStrategy": "sequence-v2"
+      },
+      {
         "telegramMessageId": 23971,
         "telegramFileName": "YTKACE_1.1.5_YouTube_21.45.4_tweaks.ipa",
         "bundleIdentifier": "com.google.ios.youtube",
