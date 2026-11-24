@@ -8,10 +8,18 @@
       "name": "YTLite",
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "Driftywinds (community repack)",
-      "subtitle": "YTLite + Tweaks | YouTube v21.46.3",
-      "localizedDescription": "Latest release: YTLite + Tweaks | YouTube v21.46.3\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.46.3\n\nYTLite with additional YouTube tweaks.\nUnofficial, third-party release.",
+      "subtitle": "YTLite + Tweaks | YouTube v21.47.6",
+      "localizedDescription": "Latest release: YTLite + Tweaks | YouTube v21.47.6\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.47.6\n\nYTLite with additional YouTube tweaks.\nUnofficial, third-party release.",
       "iconURL": "https://raw.githubusercontent.com/DeskHermit/drifty-sidestore/main/assets/ytlite.png",
       "versions": [
+        {
+          "version": "21.47.6",
+          "buildVersion": "241.98.0",
+          "date": "2026-11-24",
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-24198/YTPlusYTweaks_custom_SDK16.5_v21.47.6.ipa",
+          "size": 155657271,
+          "localizedDescription": "YTLite + Tweaks | YouTube v21.47.6\n\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.47.6\n\nOriginal attachment: YTPlusYTweaks_custom_SDK16.5_v21.47.6.ipa\nSideStore build: 241.98.0 (upstream build: 21.47.6)"
+        },
         {
           "version": "21.46.3",
           "buildVersion": "240.73.0",
