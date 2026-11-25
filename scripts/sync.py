@@ -2,15 +2,17 @@
 
 Requires joined Telegram user account, GH_TOKEN, GH_REPO, TG_API_ID,
 TG_API_HASH, TG_SESSION. The repo workflow commits JSON sources and state.
-For all three apps, each new Telegram release receives a distinct CFBundleVersion
-within a repackaged IPA, matched by the SideStore source metadata.
+Mirrors Telegram IPA files BYTE-FOR-BYTE without modifying code signatures or
+repacking archives. SideStore version/build values are read from the original IPA.
+A new tweak may retain the same internal version; in that case the newest IPA
+appears in the feed, but SideStore might not offer an automatic update.
 """
 import asyncio
+import hashlib
 import json
 import os
 import plistlib
 import re
-import shutil
 import subprocess
 import tempfile
 import zipfile
@@ -95,17 +97,6 @@ def telegram_caption(message, filename):
     return text[:500]
 
 
-def sidestore_build_index(build):
-    """Recover the monotonically increasing sequence from our X.Y.0 build scheme."""
-    match = re.fullmatch(r'(\d+)\.(\d{1,2})\.0', str(build))
-    if not match:
-        return None
-    major, minor = map(int, match.groups())
-    if minor >= 100:
-        return None
-    return major * 100 + minor
-
-
 def ipa_info(path):
     with zipfile.ZipFile(path) as archive:
         candidates = [n for n in archive.namelist() if re.fullmatch(r'Payload/[^/]+\.app/Info\.plist', n)]
@@ -120,48 +111,49 @@ def ipa_info(path):
     return bundle, version, build
 
 
-def sidestore_release_build(message_id):
-    """Make a monotonically increasing iOS-compatible build from a Telegram ID.
+def sha256_file(path):
+    """Fingerprint the exact IPA bytes downloaded from Telegram."""
+    digest = hashlib.sha256()
+    with open(path, 'rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
 
-    Message ID 23827 becomes 238.27.0. The first component stays below
-    the documented four-digit maximum until the ID reaches 1,000,000.
-    Telegram message IDs increase as new releases are posted to the topic.
+
+def is_repacked_version(item):
+    """Recognize older mirrors produced by the build-number rewrite scripts.
+
+    We must not keep broken -ss-tg- releases in the published source after
+    switching to original IPA bytes. Their release assets are not deleted.
     """
-    if not 1 <= message_id < 1_000_000:
-        raise ValueError(
-            f'Telegram message ID {message_id} is outside the supported '
-            'CFBundleVersion range; revise the build-number scheme.'
-        )
-    return f'{message_id // 100}.{message_id % 100}.0'
+    if item.get('buildStrategy') in ('sequence-v1', 'sequence-v2'):
+        return True
+    url = item.get('downloadURL', '')
+    return bool(re.search(
+        r'/releases/download/(?:ytlite|ytkace|youmod)-ss-tg-\d+/',
+        url, re.IGNORECASE
+    ))
 
 
-def repack_ipa_build_version(input_path, output_path, new_build):
-    """Change only the main app's CFBundleVersion in an IPA archive.
+def is_trusted_original(item, key):
+    """Already mirrored without modification (old original or new raw tag)."""
+    if item.get('mirrorFormat') == 'telegram-original-v1':
+        return True
+    url = item.get('downloadURL', '')
+    return bool(re.search(
+        rf'/releases/download/{key.lower()}-tg-\d+/', url, re.IGNORECASE
+    ))
 
-    This invalidates the IPA's existing code signature. SideStore must re-sign
-    the app during installation. No executable or bundled framework is edited.
-    """
-    plist_pattern = re.compile(r'Payload/[^/]+\.app/Info\.plist')
-    changed = 0
-    with zipfile.ZipFile(input_path, 'r') as original, zipfile.ZipFile(output_path, 'w') as output:
-        output.comment = original.comment
-        for member in original.infolist():
-            if plist_pattern.fullmatch(member.filename):
-                raw = original.read(member)
-                info = plistlib.loads(raw)
-                info['CFBundleVersion'] = new_build
-                fmt = plistlib.FMT_BINARY if raw.startswith(b'bplist00') else plistlib.FMT_XML
-                output.writestr(member, plistlib.dumps(info, fmt=fmt, sort_keys=False))
-                changed += 1
-            elif member.is_dir():
-                output.writestr(member, b'')
-            else:
-                # Stream assets to avoid holding a 100+ MB IPA in memory.
-                with original.open(member, 'r') as reader, output.open(member, 'w', force_zip64=True) as writer:
-                    shutil.copyfileobj(reader, writer, length=1024 * 1024)
-    if changed != 1:
-        output_path.unlink(missing_ok=True)
-        raise ValueError(f'Expected one app Info.plist for IPA repack, found {changed}')
+
+def remove_repacked_history(state):
+    """Stop advertising older repacked IPAs known to be problematic."""
+    for key in APPS:
+        history = state['apps'].get(key, [])
+        cleaned = [item for item in history if not is_repacked_version(item)]
+        if len(cleaned) != len(history):
+            print(f'{key}: removed {len(history) - len(cleaned)} repacked '
+                  'release(s) from source history; GitHub assets are untouched')
+        state['apps'][key] = cleaned
 
 
 async def get_group(client):
@@ -293,17 +285,22 @@ def source_from_state(state, selected_keys=None):
         if any(v['bundleIdentifier'] != latest['bundleIdentifier'] for v in versions):
             raise ValueError(f'{key} changed bundle IDs; migration requires manual review')
 
+        # SideStore identifies releases by the IPA's actual version/build.
+        # Retain the full Telegram release history in state.json, but expose
+        # only the newest matching version/build pair to avoid ambiguous
+        # duplicate entries in the SideStore app listing.
         rendered = []
+        seen_version_builds = set()
         for v in versions:
+            pair = (v['version'], v['buildVersion'])
+            if pair in seen_version_builds:
+                continue
+            seen_version_builds.add(pair)
             entry = {
                 field: v[field]
                 for field in (
-                    'version',
-                    'buildVersion',
-                    'date',
-                    'downloadURL',
-                    'size',
-                    'localizedDescription'
+                    'version', 'buildVersion', 'date', 'downloadURL',
+                    'size', 'localizedDescription'
                 )
             }
             label = state_release_label(key, v)
@@ -350,6 +347,11 @@ def source_from_state(state, selected_keys=None):
 
 async def main():
     state = load_state()
+
+    # Migration: remove the old rewritten-IPAs from every feed. New raw tags
+    # will be created on this run for the latest Telegram release of each app.
+    remove_repacked_history(state)
+
     async with TelegramClient(StringSession(os.environ['TG_SESSION']),
                               int(os.environ['TG_API_ID']), os.environ['TG_API_HASH']) as client:
         group = await get_group(client)
@@ -358,61 +360,40 @@ async def main():
         found = await discover(client, group, topic_id)
         if not found:
             raise RuntimeError('No matching IPA attachments found in the topic')
+
         with tempfile.TemporaryDirectory() as tmp:
             for key, (msg, filename, match) in found.items():
                 prior = state['apps'].get(key, [])
-                # All variants get a unique build. If a same-version + Tweaks
-                # attachment was posted before a standard attachment we already
-                # mirrored, use a newer sequence to avoid a downgrade.
-                base_build = sidestore_release_build(msg.id)
-                if prior and prior[0].get('telegramMessageId') == msg.id:
-                    if (prior[0].get('buildVersion') == base_build
-                            or prior[0].get('buildStrategy') == 'sequence-v2'):
-                        print(f'{key}: unchanged')
-                        continue
-                    print(f'{key}: migrating release to unique build metadata')
-
-                build_index = msg.id
-                if prior and prior[0].get('telegramMessageId') != msg.id:
-                    previous_index = sidestore_build_index(prior[0].get('buildVersion'))
-                    if previous_index is not None:
-                        build_index = max(build_index, previous_index + 1)
-                desired_build = sidestore_release_build(build_index)
+                if (prior
+                        and prior[0].get('telegramMessageId') == msg.id
+                        and is_trusted_original(prior[0], key)):
+                    print(f'{key}: unchanged original Telegram IPA')
+                    continue
 
                 local = Path(tmp) / filename
-                print(f'{key}: downloading {filename}')
+                print(f'{key}: downloading ORIGINAL {filename}')
                 await client.download_media(msg, file=str(local))
-                if not local.is_file():
+                if not local.is_file() or not local.stat().st_size:
                     raise RuntimeError(f'Telegram download failed for {filename}')
-                bundle, version, original_build = ipa_info(local)
+
+                # IMPORTANT: Never edit Info.plist, unzip/repack, or re-sign.
+                # Upload the exact downloaded file, including its original
+                # embedded tweak resources, metadata, and signature data.
+                bundle, version, build = ipa_info(local)
                 if prior and prior[0]['bundleIdentifier'] != bundle:
                     raise ValueError(
                         f'{key}: bundle ID changed from '
                         f'{prior[0]["bundleIdentifier"]} to {bundle}'
                     )
-
-                build = desired_build
-                if original_build != build:
-                    # Alter ONLY the main app's CFBundleVersion, never its
-                    # CFBundleIdentifier or CFBundleShortVersionString.
-                    # The repack invalidates its old signature: SideStore must
-                    # re-sign the IPA when installing/updating it.
-                    repacked = local.with_name('repacked-' + local.name)
-                    repack_ipa_build_version(local, repacked, build)
-                    os.replace(repacked, local)
-                actual_bundle, actual_version, actual_build = ipa_info(local)
-                if (actual_bundle, actual_version, actual_build) != (bundle, version, build):
-                    raise ValueError(f'{key}: repacked IPA version verification failed')
-                print(f'{key}: build {original_build} -> {build} '
-                      f'(YouTube {version}, tweak {match.get("mod", "not in filename")})')
-
                 size = local.stat().st_size
                 if size >= 2 * 1024**3:
                     raise ValueError(f'GitHub Releases asset size limit exceeded: {filename}')
-                # Use new release tags for all three apps, leaving older,
-                # unmodified GitHub Releases untouched and preserving history.
-                # Existing YTKACE -ss- tags remain the same.
-                tag = f'{key.lower()}-ss-tg-{msg.id}'
+                sha256 = sha256_file(local)
+                print(f'{key}: original IPA {size} bytes, SHA-256 {sha256}')
+
+                # New tag namespace prevents collisions with previously
+                # repacked assets, which remain untouched for rollback.
+                tag = f'{key.lower()}-raw-tg-{msg.id}'
                 url = f'https://github.com/{REPO}/releases/download/{quote(tag)}/{quote(filename)}'
                 label = release_label(key, match)
                 caption = telegram_caption(msg, filename)
@@ -420,34 +401,75 @@ async def main():
                 if caption and caption.casefold() != label.casefold():
                     description += f'\n\nTelegram description: {caption}'
                 description += (
-                    f'\n\nOriginal attachment: {filename}'
-                    f'\nSideStore build: {build} (upstream build: {original_build})'
+                    f'\n\nOriginal Telegram attachment: {filename}'
+                    f'\nUpstream version/build: {version}/{build}'
+                    f'\nSHA-256: {sha256}'
+                    '\nFile mirrored without modifications.'
                 )
-                # Do not publish state/source until release upload succeeds.
+
+                # If a previous partial run uploaded the same raw tag,
+                # reject unexpected asset sizes instead of silently using
+                # a different file. All new assets must be the raw IPA.
                 existing = subprocess.run(
-                    ['gh', 'release', 'view', tag, '--repo', REPO, '--json', 'assets',
-                     '--jq', '.assets[].name'], capture_output=True, text=True)
+                    ['gh', 'release', 'view', tag, '--repo', REPO,
+                     '--json', 'assets'], capture_output=True, text=True
+                )
                 if existing.returncode == 0:
-                    if filename not in existing.stdout.splitlines():
-                        command('gh', 'release', 'upload', tag, str(local), '--repo', REPO)
+                    assets = json.loads(existing.stdout)['assets']
+                    matches = [asset for asset in assets if asset['name'] == filename]
+                    if matches:
+                        if matches[0]['size'] != size:
+                            raise ValueError(
+                                f'{key}: GitHub release {tag} has {filename} '
+                                f'with size {matches[0]["size"]}, expected {size}. '
+                                'Manual inspection required.'
+                            )
+                        print(f'{key}: existing raw release has matching asset size')
+                    else:
+                        command('gh', 'release', 'upload', tag, str(local),
+                                '--repo', REPO)
                 else:
                     command('gh', 'release', 'create', tag, str(local),
-                            '--repo', REPO, '--title', f'{key} / YouTube {match["yt"]}',
+                            '--repo', REPO,
+                            '--title', f'{key} / YouTube {match["yt"]} (original IPA)',
                             '--notes', description, '--latest=false')
+
+                if prior and (prior[0]['version'], prior[0]['buildVersion']) == (version, build):
+                    print(f'{key}: new Telegram release uses the same upstream '
+                          f'version/build ({version}/{build}); SideStore may not '
+                          'display an automatic update notification')
+
                 date = msg.date.astimezone(timezone.utc).date().isoformat()
                 item = {
-                    'telegramMessageId': msg.id, 'telegramFileName': filename,
-                    'bundleIdentifier': bundle, 'version': version,
-                    'buildVersion': build, 'date': date, 'downloadURL': url,
-                    'size': size, 'localizedDescription': description,
-                    'releaseLabel': label, 'telegramCaption': caption,
-                    'buildStrategy': 'sequence-v2',
+                    'telegramMessageId': msg.id,
+                    'telegramFileName': filename,
+                    'bundleIdentifier': bundle,
+                    'version': version,
+                    'buildVersion': build,
+                    'date': date,
+                    'downloadURL': url,
+                    'size': size,
+                    'localizedDescription': description,
+                    'releaseLabel': label,
+                    'telegramCaption': caption,
+                    'mirrorFormat': 'telegram-original-v1',
+                    'sha256': sha256,
                 }
-                state['apps'][key] = [item] + [v for v in prior if v['telegramMessageId'] != msg.id]
+                state['apps'][key] = [item] + [
+                    previous for previous in prior
+                    if previous['telegramMessageId'] != msg.id
+                ]
+
     STATE.write_text(json.dumps(state, indent=2, ensure_ascii=False) + '\n')
     SOURCE.write_text(json.dumps(source_from_state(state), indent=2, ensure_ascii=False) + '\n')
-    for key, filename in [('YTLite', 'ytlite.json'), ('YTKACE', 'ytkace.json'), ('YouMod', 'youmod.json')]:
-        (ROOT / filename).write_text(json.dumps(source_from_state(state, (key,)), indent=2, ensure_ascii=False) + '\n')
+    for key, filename in [
+        ('YTLite', 'ytlite.json'),
+        ('YTKACE', 'ytkace.json'),
+        ('YouMod', 'youmod.json')
+    ]:
+        (ROOT / filename).write_text(
+            json.dumps(source_from_state(state, (key,)), indent=2, ensure_ascii=False) + '\n'
+        )
     print('Wrote state.json, source.json, ytlite.json, ytkace.json, youmod.json')
 
 
