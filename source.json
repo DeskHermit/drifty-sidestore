@@ -14,35 +14,11 @@
       "versions": [
         {
           "version": "21.47.6",
-          "buildVersion": "241.98.0",
+          "buildVersion": "21.47.6",
           "date": "2026-11-24",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-24198/YTPlusYTweaks_custom_SDK16.5_v21.47.6.ipa",
-          "size": 155657271,
-          "localizedDescription": "YTLite + Tweaks | YouTube v21.47.6\n\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.47.6\n\nOriginal attachment: YTPlusYTweaks_custom_SDK16.5_v21.47.6.ipa\nSideStore build: 241.98.0 (upstream build: 21.47.6)"
-        },
-        {
-          "version": "21.46.3",
-          "buildVersion": "240.73.0",
-          "date": "2026-11-17",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-24073/YTPlusYTweaks_custom_SDK16.5_v21.46.3.ipa",
-          "size": 154263006,
-          "localizedDescription": "YTLite + Tweaks | YouTube v21.46.3\n\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.46.3\n\nOriginal attachment: YTPlusYTweaks_custom_SDK16.5_v21.46.3.ipa\nSideStore build: 240.73.0 (upstream build: 21.46.3)"
-        },
-        {
-          "version": "21.45.4",
-          "buildVersion": "239.73.0",
-          "date": "2026-11-09",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-23973/YTPlusYTweaks_custom_SDK16.5_v21.45.4.ipa",
-          "size": 152870839,
-          "localizedDescription": "YTLite + Tweaks | YouTube v21.45.4\n\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.45.4\n\nOriginal attachment: YTPlusYTweaks_custom_SDK16.5_v21.45.4.ipa\nSideStore build: 239.73.0 (upstream build: 21.45.4)"
-        },
-        {
-          "version": "21.44.4",
-          "buildVersion": "238.28.0",
-          "date": "2026-11-04",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-ss-tg-23828/YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa",
-          "size": 152049977,
-          "localizedDescription": "YTLite + Tweaks | YouTube v21.44.4\n\nYouTube 21.44.4; YTLite. Mirror of Telegram attachment YTPlusYTweaks_custom_SDK16.5_v21.44.4.ipa; internal build metadata 21.44.4 -> 238.28.0 for SideStore update detection"
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytlite-raw-tg-24198/YTPlusYTweaks_custom_SDK16.5_v21.47.6.ipa",
+          "size": 155595164,
+          "localizedDescription": "YTLite + Tweaks | YouTube v21.47.6\n\nTelegram description: YTLite (v6.0 cracked by SpyG) + Tweaks v21.47.6\n\nOriginal Telegram attachment: YTPlusYTweaks_custom_SDK16.5_v21.47.6.ipa\nUpstream version/build: 21.47.6/21.47.6\nSHA-256: 93688f9d0a266748ab3be2914d7bea6d047155e70963ce41257e7921436f3d39\nFile mirrored without modifications."
         },
         {
           "version": "21.43.5",

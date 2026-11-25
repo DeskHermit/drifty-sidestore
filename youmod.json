@@ -14,35 +14,11 @@
       "versions": [
         {
           "version": "21.47.6",
-          "buildVersion": "241.96.0",
+          "buildVersion": "21.47.6",
           "date": "2026-11-24",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-24196/YouMod_21.47.6_v2.0.0.ipa",
-          "size": 136375024,
-          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.47.6\n\nTelegram description: YouMod (v2.0.0) + Tweaks v21.47.6\n\nOriginal attachment: YouMod_21.47.6_v2.0.0.ipa\nSideStore build: 241.96.0 (upstream build: 21.47.6)"
-        },
-        {
-          "version": "21.46.3",
-          "buildVersion": "240.72.0",
-          "date": "2026-11-17",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-24072/YouMod_21.46.3_v2.0.0.ipa",
-          "size": 135682255,
-          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.46.3\n\nTelegram description: YouMod (v2.0.0) + Tweaks v21.46.3\n\nOriginal attachment: YouMod_21.46.3_v2.0.0.ipa\nSideStore build: 240.72.0 (upstream build: 21.46.3)"
-        },
-        {
-          "version": "21.45.4",
-          "buildVersion": "239.72.0",
-          "date": "2026-11-09",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-23972/YouMod_21.45.4_v2.0.0.ipa",
-          "size": 134290109,
-          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.45.4\n\nTelegram description: YouMod (v2.0.0) + Tweaks v21.45.4\n\nOriginal attachment: YouMod_21.45.4_v2.0.0.ipa\nSideStore build: 239.72.0 (upstream build: 21.45.4)"
-        },
-        {
-          "version": "21.44.4",
-          "buildVersion": "238.4.0",
-          "date": "2026-11-03",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-ss-tg-23804/YouMod_21.44.4_v2.0.0.ipa",
-          "size": 133469432,
-          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.44.4\n\nYouTube 21.44.4; YouMod 2.0.0. Mirror of Telegram attachment YouMod_21.44.4_v2.0.0.ipa; internal build metadata 21.44.4 -> 238.4.0 for SideStore update detection"
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/youmod-raw-tg-24196/YouMod_21.47.6_v2.0.0.ipa",
+          "size": 136285843,
+          "localizedDescription": "YouMod v2.0.0 + Tweaks | YouTube v21.47.6\n\nTelegram description: YouMod (v2.0.0) + Tweaks v21.47.6\n\nOriginal Telegram attachment: YouMod_21.47.6_v2.0.0.ipa\nUpstream version/build: 21.47.6/21.47.6\nSHA-256: 6159629fc59a4424e6bc970bff35926e39a89ed1bc57ab1d190ec14d781e4218\nFile mirrored without modifications."
         }
       ]
     }

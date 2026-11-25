@@ -14,51 +14,11 @@
       "versions": [
         {
           "version": "21.47.6",
-          "buildVersion": "241.97.0",
+          "buildVersion": "21.47.6",
           "date": "2026-11-24",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-24197/YTKACE_1.1.9_YouTube_21.47.6_tweaks.ipa",
-          "size": 138508491,
-          "localizedDescription": "YTKACE v1.1.9 + Tweaks | YouTube v21.47.6\n\nTelegram description: YTKACE (v1.1.9) + Tweaks v21.47.6\n\nOriginal attachment: YTKACE_1.1.9_YouTube_21.47.6_tweaks.ipa\nSideStore build: 241.97.0 (upstream build: 21.47.6)"
-        },
-        {
-          "version": "21.46.3",
-          "buildVersion": "240.71.0",
-          "date": "2026-11-17",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-24071/YTKACE_1.1.8_YouTube_21.46.3_tweaks.ipa",
-          "size": 137115654,
-          "localizedDescription": "YTKACE v1.1.8 + Tweaks | YouTube v21.46.3\n\nTelegram description: YTKACE (v1.1.8) + Tweaks v21.46.3\n\nOriginal attachment: YTKACE_1.1.8_YouTube_21.46.3_tweaks.ipa\nSideStore build: 240.71.0 (upstream build: 21.46.3)"
-        },
-        {
-          "version": "21.45.4",
-          "buildVersion": "239.88.0",
-          "date": "2026-11-11",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23988/YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa",
-          "size": 135560528,
-          "localizedDescription": "YTKACE v1.1.7 + Tweaks | YouTube v21.45.4\n\nTelegram description: YTKACE (v1.1.7) v21.45.4\n\nOriginal attachment: YTKACE_1.1.7_YouTube_21.45.4_tweaks.ipa\nSideStore build: 239.88.0 (upstream build: 21.45.4)"
-        },
-        {
-          "version": "21.45.4",
-          "buildVersion": "239.71.0",
-          "date": "2026-11-09",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23971/YTKACE_1.1.5_YouTube_21.45.4_tweaks.ipa",
-          "size": 135474249,
-          "localizedDescription": "YTKACE v1.1.5 + Tweaks | YouTube v21.45.4\n\nTelegram description: YTKACE (v1.1.5) v21.45.4\n\nOriginal attachment: YTKACE_1.1.5_YouTube_21.45.4_tweaks.ipa\nSideStore build: 239.71.0 (upstream build: 21.45.4)"
-        },
-        {
-          "version": "21.44.4",
-          "buildVersion": "238.52.0",
-          "date": "2026-11-04",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23852/YTKACE_1.1.5_YouTube_21.44.4_tweaks.ipa",
-          "size": 134920008,
-          "localizedDescription": "YTKACE v1.1.5 + Tweaks | YouTube v21.44.4\n\nTelegram description: YTKACE (v1.1.5) + Tweaks v21.44.4\n\nOriginal attachment: YTKACE_1.1.5_YouTube_21.44.4_tweaks.ipa\nSideStore build: 238.52.0 (upstream build: 21.44.4)"
-        },
-        {
-          "version": "21.44.4",
-          "buildVersion": "238.27.0",
-          "date": "2026-11-04",
-          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-ss-tg-23827/YTKACE_1.1.5_YouTube_21.44.4.ipa",
-          "size": 138404226,
-          "localizedDescription": "YTKACE v1.1.5 (standard) | YouTube v21.44.4\n\nYouTube 21.44.4; YTKACE 1.1.5. Mirror of Telegram attachment YTKACE_1.1.5_YouTube_21.44.4.ipa; internal build metadata 21.44.4 -> 238.27.0 for SideStore update detection"
+          "downloadURL": "https://github.com/DeskHermit/drifty-sidestore/releases/download/ytkace-raw-tg-24197/YTKACE_1.1.9_YouTube_21.47.6_tweaks.ipa",
+          "size": 138421546,
+          "localizedDescription": "YTKACE v1.1.9 + Tweaks | YouTube v21.47.6\n\nTelegram description: YTKACE (v1.1.9) + Tweaks v21.47.6\n\nOriginal Telegram attachment: YTKACE_1.1.9_YouTube_21.47.6_tweaks.ipa\nUpstream version/build: 21.47.6/21.47.6\nSHA-256: a550f2e6b46749a6d12dab03ec089f70c0989f0588e6456ec898527eba9b56b2\nFile mirrored without modifications."
         },
         {
           "version": "21.44.4",
